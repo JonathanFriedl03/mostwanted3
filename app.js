@@ -41,9 +41,11 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
+    searchForFamily(person, person);
     break;
     case "descendants":
     // TODO: get person's descendants
+    searchForDescendants(person, people);
     break;
     case "restart":
     app(people); // restart
@@ -60,7 +62,7 @@ function searchByName(people){
   let lastName = promptFor("What is the person's last name?", chars);
 
   let foundPerson = people.filter(function(person){
-    if(person.firstName === firstName && person.lastName === lastName){
+    if(person.firstName === firstName && person.lastName === lastName){ 
       return true;
     }
     else{
@@ -68,7 +70,13 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
-  return foundPerson;
+  if(foundPerson === null|| foundPerson.length === 0){
+    alert("Sorry that person is not in the database.")
+    return app(people);
+  }else{
+    return foundPerson;
+  }
+ 
 }
 
 // alerts a list of people
@@ -81,8 +89,18 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  let personInfo = "ID: " + person[0].id + "\n";
+  personInfo += "First Name: " + person[0].firstName + "\n";
+  personInfo += "Last Name: " + person[0].lastName + "\n";
+  personInfo += "gender: " + person[0].lastName + "\n";
+  personInfo += "DOB: " + person[0].lastName + "\n";
+  personInfo += "Height: " + person[0].lastName + "\n";
+  personInfo += "Weight: " + person[0].lastName + "\n";
+  personInfo += "Eye Color: " + person[0].lastName + "\n";
+  personInfo += "Occupation: " + person[0].lastName + "\n";
+  personInfo += "Parents: " + person[0].lastName + "\n";
+  personInfo += "Current Spouse: " + person[0].lastName + "\n";
+  
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
