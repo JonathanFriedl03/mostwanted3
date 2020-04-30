@@ -33,11 +33,12 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPeople(person);
     break;
     case "family":
     // TODO: get person's family
@@ -58,11 +59,11 @@ function mainMenu(person, people){
 }
 
 function searchByName(people){
-  let firstName = promptFor("What is the person's first name?", chars);
-  let lastName = promptFor("What is the person's last name?", chars);
+  let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
+  let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
 
   let foundPerson = people.filter(function(person){
-    if(person.firstName === firstName && person.lastName === lastName){ 
+    if((person.firstName).toLowerCase() === firstName && (person.lastName).toLowerCase() === lastName){ 
       return true;
     }
     else{
@@ -78,14 +79,77 @@ function searchByName(people){
   }
  
 }
+function searchOptions(){
+  let input = promptFor("Which trait would you like to search by?" + "\n" + "'1': Gender" + "\n" + "'2': Height" + "\n" + "'3': Weight" + "'4': Eye Color" + "\n" + "'5': Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
+  return input;
+
+}
+function runSearch(people) {
+  let peopleFound = people;
+  let input = searchOptions();
+  peopleFound = searchBySingleTrait(foundPeople,input,people);
+  if(!peopleFound)
+      {
+        alert("Let's try a new search.");
+        runSearch(people); //start over
+      }else{
+        displayPeople(foundPeople);
+      }
+  runSearch(people);
+}
+function searchBySingleTrait(foundPeople,input,people){
+switch(input){
+  case"1":
+  let trait = "gender";
+  let userChoice = promptFor("Is the person male or female?").toLowerCase();
+  peopleFound = getPeople(trait,userChoice,foundPeople);
+  break;
+  case "2":
+    let trait = "height";
+    let userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
+    peopleFound = getPeople(trait,userChoice,foundPeople);
+    break;
+    case "3":
+      let trait = "weight";
+      let userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+    break;
+    case "4":
+      let trait = "eyecolor";
+      let userChoice = promptFor("What is the persons eye color?", chars);
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+      break;
+      case "5":
+      let trait = "occupation";
+      let userChoice = promptFor("What is the persons" + trait + "?", chars);
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+      break;
+  case "restart":
+    app(people);
+    break;
+    default:
+      return runSearch(people);
+  }
+return peopleFound;
+}
+
+function getPeople(trait,userChoice,foundPeople) {
+  foundPeople = foundPeople.filter(function(person){
+    if(person[trait] === userChoice){
+      return true;
+    }else {
+      return false;
+    }
+  })
+  return foundPeople;
+}
+
+
 function searchForByMultipleTraits(people){
-  let searchfor = promptFor("What would you like to search by 'id', 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
+  let searchfor = promptFor("What would you like to  'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
   let searchResults;
   switch(searchfor){
-  case 'id':
-    searchResults = searchById(people)
-    break;
-    case 'firstName':
+      case 'firstName':
       searchResults = searchByFirstName(people)
       break;
       case 'lastName':
