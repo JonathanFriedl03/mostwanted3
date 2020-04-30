@@ -78,6 +78,49 @@ function searchByName(people){
   }
  
 }
+function searchForByMultipleTraits(people){
+  let searchfor = promptFor("What would you like to search by 'id', 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
+  let searchResults;
+  switch(searchfor){
+  case 'id':
+    searchResults = searchById(people)
+    break;
+    case 'firstName':
+      searchResults = searchByFirstName(people)
+      break;
+      case 'lastName':
+        searchResults = searchByLastName(people)
+        break;
+        case 'gender':
+          searchResults = searchByGender(people)
+          break;
+          case 'dob':
+            searchResults = searchByDob(people)
+            break;
+            case 'height':
+              searchResults = searchByHeight(people)
+              break;
+              case 'weight':
+                searchResults = searchByWeight(people)
+                break;
+                case 'eyeColor':
+                  searchResults = searchByEyeColor(people)
+                  break;
+                  case 'occupation':
+                    searchResults = searchByOccupation(people)
+                    break;
+                    case 'parents':
+                      searchResults = searchByParents(people)
+                      break;
+                      case 'currentSpouse':
+                        searchResults = searchByCurrentSpouse(people)
+                        break;
+                        default:
+                          app(people); // restart app
+                            break;
+
+  }
+}
 
 // alerts a list of people
 function displayPeople(people){
