@@ -111,7 +111,7 @@ switch(input){
     break;
     case "3":
       let trait = "weight";
-      let userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
+      let userChoice = parseInt(promptFor("What is the persons" + trait + "in pounds?"));
       peopleFound = getPeople(trait,userChoice,foundPeople);
     break;
     case "4":
@@ -210,6 +210,10 @@ function displayPerson(person){
   
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
+}
+function displayFamilyMembers(familyMember){
+  let familyMember = "First Name" + familyMember.firstName + " " + familyMember.lastName + "\n"
+alert(familyMember)
 }
 
 // function that prompts and validates user input
