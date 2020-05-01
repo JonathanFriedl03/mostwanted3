@@ -61,7 +61,7 @@ function mainMenu(person, people){
 }
 
 function searchForFamily(people,person){
-  let spouse;  
+  let spouse = people.filter(p => p.currentSpouse == person.id);  
   let siblingsArray = [];
   let descendantsArray = [];
   spouse = getSpouse(people, person);
@@ -70,7 +70,7 @@ function searchForFamily(people,person){
   descendantsArray = getChildren(people, person, descendantsArray);
   
 }
-function getSpouse(people, person){
+function getSpouse(people, person){  
   for (var i = 0; i < people.length; i++){
     if(people[i].id === person[0].currentSpouse){
     console.log(person[0].firstName + " " + person[0].lastName + " is married to " + people[i].firstName + " " +
@@ -81,18 +81,25 @@ function getSpouse(people, person){
   }
 }
 function getParents(people, person){
+  let personName = person[0].firstName + " "+ person[0].lastName;
+  let parents = person[0].parents;
   let parentsArray = [];
-  people.filter(function(people){
-    for (var i = 0; i < person.parents.length; i++){
-      if(people.personId === person.parents[i]){
-        console.log(people.firstName + "" + people.lastName + "is the parent of" + person.firstName + "" + person.lastName +"."); parentsArray.push(el);
-        return true;        
+  if(parents.length != 0){
+    parents.forEach(function(parent) {
+      
+    });(function(people){
+      for (var i = 0; i < person[0].parents.length; i++){
+        if(people[i].id === person[0].parents){
+          console.log(people[i].firstName + "" + people[i].lastName + "is the parent of" + person[0].firstName + "" + person[0].lastName +"."); parentsArray.push(el);
+          return true;        
+        }
+        else{
+          return false;
+        } 
       }
-      else{
-        return false;
-      } 
-    }
-  });return parentsArray;
+    });return parentsArray;
+  }
+  
 }
 function getSiblings(people, person){
   let siblingsArray = [];
@@ -253,18 +260,18 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "ID: " + person[0].id + "\n";
+ 
   personInfo += "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
-  personInfo += "gender: " + person[0].lastName + "\n";
-  personInfo += "DOB: " + person[0].lastName + "\n";
-  personInfo += "Height: " + person[0].lastName + "\n";
-  personInfo += "Weight: " + person[0].lastName + "\n";
-  personInfo += "Eye Color: " + person[0].lastName + "\n";
-  personInfo += "Occupation: " + person[0].lastName + "\n";
-  personInfo += "Parents: " + person[0].lastName + "\n";
-  personInfo += "Current Spouse: " + person[0].lastName + "\n";
-  
+  personInfo += "gender: " + person[0].gender + "\n";
+  personInfo += "DOB: " + person[0].dob + "\n";
+  personInfo += "Height: " + person[0].height + "\n";
+  personInfo += "Weight: " + person[0].weight + "\n";
+  personInfo += "Eye Color: " + person[0].eyecolor + "\n";
+  personInfo += "Occupation: " + person[0].occupation + "\n";
+  personInfo += "Parents: " + person[0].parents + "\n";
+  personInfo += "Current Spouse: " + person[0].currentSpouse + "\n";
+
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
