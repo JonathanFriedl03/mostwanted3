@@ -53,7 +53,7 @@ function chooseTheTraitToSearch(people){
     case 'height':
       searchResults = searchByHeight(people);
       break;
-      
+
   }
 }
 
@@ -181,7 +181,7 @@ function searchOptions(){
   return input;
 
 }
-function runSearch(people) {
+/* function runSearch(people) {
   let peopleFound = people;
   let input = searchOptions();
   peopleFound = searchBySingleTrait(foundPeople,input,people);
@@ -197,7 +197,7 @@ function runSearch(people) {
         displayPeople(people);
       }
   runSearch(people);
-}
+} */
 // function searchBySingleTrait(foundPeople,input,people){ 
 //   let = trait;
 //   let = userChoice;
