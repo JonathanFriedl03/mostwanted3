@@ -65,13 +65,14 @@ function searchForFamily(people,person){
   let siblingsArray = [];
   let descendantsArray = [];
   spouse = getSpouse(people, person);
+  parentsArray = getParents(people, person);
   siblingsArray = getSiblings(people, person, siblingsArray);
   descendantsArray = getChildren(people, person, descendantsArray);
-  parentsArray = getParents(people, person);
+  
 }
 function getSpouse(people, person){
   for (var i = 0; i < people.length; i++){
-    if(people[i].currentSpouse === person.personId){
+    if(people[i].id === person.currentSpouse){
     console.log(person.firstName + "" + person.lastName + "is married to" + people[i].firstName + "" +
     people[i].lastName +".");
     return people[i];
@@ -92,6 +93,23 @@ function getParents(people, person){
       } 
     }
   });return parentsArray;
+}
+function getSiblings(people, person){
+  let siblingsArray = [];
+  people.filter(function(people){
+    for (var i = 0; i < person.parents.length; i++){
+      for(var j = 0; j < person.parents.length; j++){
+        if(people.parents[i] === person.parents[j]){
+          console.log(people.firstName + "" + people.lastName + " are " + person.firstName + "" + person.lastName +" siblings."); parentsArray.push(el);
+          return true;        
+        }
+        else{
+          return false;
+        } 
+      }
+     
+    }
+  });return siblingsArray;
 }
 
 function searchByName(people){
@@ -250,10 +268,10 @@ function displayPerson(person){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-function displayFamilyMembers(familyMember){
-  let familyMember = "First Name" + familyMember.firstName + " " + familyMember.lastName + "\n"
-alert(familyMember)
-}
+// function displayFamilyMembers(familyMember){
+//   let familyMember = "First Name" + familyMember.firstName + " " + familyMember.lastName + "\n"
+// alert(familyMember)
+// }
 
 // function that prompts and validates user input
 function promptFor(question, valid){
