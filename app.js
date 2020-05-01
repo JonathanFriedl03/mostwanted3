@@ -13,7 +13,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      searchBySingleTrait(people);
+      searchReasults = searchOptions(people)
       break;
       default:
         alert("Invalid input. Please try again!");
@@ -133,24 +133,24 @@ function searchByName(people){
   }
  
 }
-// function searchOptions(){
-//   let input = promptFor("Which trait would you like to search by?" + "\n" + "'1': Gender" + "\n" + "'2': Height" + "\n" + "'3': Weight" + "'4': Eye Color" + "\n" + "'5': Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
-//   return input;
+function searchOptions(){
+  let input = promptFor("Which trait would you like to search by?" + "\n" + "1: Gender" + "\n" + "2: Height" + "\n" + "3: Weight" + "4: Eye Color" + "\n" + "5: Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
+  return input;
 
-// }
-// function runSearch(people) {
-//   let peopleFound = people;
-//   let input = searchOptions();
-//   peopleFound = searchBySingleTrait(foundPeople,input,people);
-//   if(!peopleFound)
-//       {
-//         alert("Let's try a new search.");
-//         runSearch(people); //start over
-//       }else{
-//         displayPeople(foundPeople);
-//       }
-//   runSearch(people);
-// }
+}
+function runSearch(people) {
+  let peopleFound = people;
+  let input = searchOptions();
+  peopleFound = searchBySingleTrait(foundPeople,input,people);
+  if(!peopleFound)
+      {
+        alert("Let's try a new search.");
+        runSearch(people); //start over
+      }else{
+        displayPeople(foundPeople);
+      }
+  runSearch(people);
+}
 // function searchBySingleTrait(foundPeople,input,people){ 
 //   let = trait;
 //   let = userChoice;
@@ -190,58 +190,58 @@ function searchByName(people){
 // return peopleFound;
 // }
 
-// function getPeople(trait,userChoice,foundPeople) {
-//   foundPeople = foundPeople.filter(function(person){
-//     if(person[trait] === userChoice){
-//       return true;
-//     }else {
-//       return false;
-//     }
-//   })
-//   return foundPeople;
-// }
+function getPeople(trait,userChoice,foundPeople) {
+  foundPeople = foundPeople.filter(function(person){
+    if(person[trait] === userChoice){
+      return true;
+    }else {
+      return false;
+    }
+  })
+  return foundPeople;
+}
 
 
-// function searchForByMultipleTraits(people){
-//   let searchfor = promptFor("What would you like to  search for 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
-//   let searchResults;
-//   switch(searchfor){
-//       case 'firstName':
-//       searchResults = searchByFirstName(people)
-//       break;
-//       case 'lastName':
-//         searchResults = searchByLastName(people)
-//         break;
-//         case 'gender':
-//           searchResults = searchByGender(people)
-//           break;
-//           case 'dob':
-//             searchResults = searchByDob(people)
-//             break;
-//             case 'height':
-//               searchResults = searchByHeight(people)
-//               break;
-//               case 'weight':
-//                 searchResults = searchByWeight(people)
-//                 break;
-//                 case 'eyeColor':
-//                   searchResults = searchByEyeColor(people)
-//                   break;
-//                   case 'occupation':
-//                     searchResults = searchByOccupation(people)
-//                     break;
-//                     case 'parents':
-//                       searchResults = searchByParents(people)
-//                       break;
-//                       case 'currentSpouse':
-//                         searchResults = searchByCurrentSpouse(people)
-//                         break;
-//                         default:
-//                           app(people); // restart app
-//                             break;
+function searchForByMultipleTraits(people){
+  let searchfor = promptFor("What would you like to  search for 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
+  let searchResults;
+  switch(searchfor){
+      case 'firstName':
+      searchResults = searchByFirstName(people)
+      break;
+      case 'lastName':
+        searchResults = searchByLastName(people)
+        break;
+        case 'gender':
+          searchResults = searchByGender(people)
+          break;
+          case 'dob':
+            searchResults = searchByDob(people)
+            break;
+            case 'height':
+              searchResults = searchByHeight(people)
+              break;
+              case 'weight':
+                searchResults = searchByWeight(people)
+                break;
+                case 'eyeColor':
+                  searchResults = searchByEyeColor(people)
+                  break;
+                  case 'occupation':
+                    searchResults = searchByOccupation(people)
+                    break;
+                    case 'parents':
+                      searchResults = searchByParents(people)
+                      break;
+                      case 'currentSpouse':
+                        searchResults = searchByCurrentSpouse(people)
+                        break;
+                        default:
+                          app(people); // restart app
+                            break;
 
-//   }
-// }
+  }
+}
 
 // alerts a list of people
 function displayPeople(people){
@@ -256,14 +256,14 @@ function displayPerson(person){
   let personInfo = "ID: " + person[0].id + "\n";
   personInfo += "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
-  personInfo += "gender: " + person[0].lastName + "\n";
-  personInfo += "DOB: " + person[0].lastName + "\n";
-  personInfo += "Height: " + person[0].lastName + "\n";
-  personInfo += "Weight: " + person[0].lastName + "\n";
-  personInfo += "Eye Color: " + person[0].lastName + "\n";
-  personInfo += "Occupation: " + person[0].lastName + "\n";
-  personInfo += "Parents: " + person[0].lastName + "\n";
-  personInfo += "Current Spouse: " + person[0].lastName + "\n";
+  personInfo += "gender: " + person[0].gender + "\n";
+  personInfo += "DOB: " + person[0].dob + "\n";
+  personInfo += "Height: " + person[0].height + "\n";
+  personInfo += "Weight: " + person[0].weight + "\n";
+  personInfo += "Eye Color: " + person[0].eyeColor + "\n";
+  personInfo += "Occupation: " + person[0].occupation + "\n";
+  personInfo += "Parents: " + person[0].parents + "\n";
+  personInfo += "Current Spouse: " + person[0].currentSpouse + "\n";
   
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
