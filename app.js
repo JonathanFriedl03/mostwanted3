@@ -72,8 +72,8 @@ function searchForFamily(people,person){
 }
 function getSpouse(people, person){
   for (var i = 0; i < people.length; i++){
-    if(people[i].id === person.currentSpouse){
-    console.log(person.firstName + "" + person.lastName + "is married to" + people[i].firstName + "" +
+    if(people[i].id === person[0].currentSpouse){
+    console.log(person[0].firstName + " " + person[0].lastName + " is married to " + people[i].firstName + " " +
     people[i].lastName +".");
     return people[i];
       
