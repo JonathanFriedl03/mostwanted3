@@ -24,6 +24,38 @@ function app(people){
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
+function searchOptions(people){
+  let searchBy = promptFor("How Would You Like To Search by a Single Trait or by Multiple (up to five) if One Please Enter '1' if Multiple Please Enter '2'", chars);
+  let searchResults;
+  switch(searchBy){
+    case "1":
+      searchResults = chooseTheTraitToSearch(people);
+      break;
+    case "2":
+      searchResults = searchForByMultipleTraits(people);
+      break;
+    default:
+      app(people);
+      break;
+  } 
+  mainMenu(searchResults, people);
+}
+function chooseTheTraitToSearch(people){
+  let searchTrait = promptFor("How Would You Like to Search You Can Search By 'gender' 'dob' 'height' 'weight' 'eye color' 'occupation' 'parents' or by the Person's 'current spouse'? ", chars);
+  let searchResults;
+  switch (searchTrait){
+    case 'gender':
+      searchResults = searchByGender(people);
+      break;
+    case 'dob':
+      searchResults = searchByDob(people);
+      break;
+    case 'height':
+      searchResults = searchByHeight(people);
+      break;
+      
+  }
+}
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -141,7 +173,7 @@ function searchByName(people){
  
 }
 function searchOptions(){
-  let input = promptFor("Which trait would you like to search by?" + "\n" + "1: Gender" + "\n" + "2: Height" + "\n" + "3: Weight" + "4: Eye Color" + "\n" + "5: Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
+  let input = promptFor("Which trait would you like to search by?" + "\n" + "1: Gender" + "\n" + "2: Height" + "\n" + "3: Weight" + "\n" + "4: Eye Color" + "\n" + "5: Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
   return input;
 
 }
@@ -154,7 +186,11 @@ function runSearch(people) {
         alert("Let's try a new search.");
         runSearch(people); //start over
       }else{
-        displayPeople(foundPeople);
+        switch(peopleFound){
+          case "1":
+            'gender' = people.gender.
+        }
+        displayPeople(people);
       }
   runSearch(people);
 }
