@@ -250,6 +250,10 @@ function displayPerson(person){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
+function displayFamilyMembers(familyMember){
+  let familyMember = "First Name" + familyMember.firstName + " " + familyMember.lastName + "\n"
+alert(familyMember)
+}
 
 // function that prompts and validates user input
 function promptFor(question, valid){
