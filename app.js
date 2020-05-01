@@ -53,8 +53,26 @@ function chooseTheTraitToSearch(people){
     case 'height':
       searchResults = searchByHeight(people);
       break;
-
+    case 'weight':
+      searchResults = searchByWeight(people);
+      break;
+    case 'eye color':
+      searchResults = searchByEyeColor(people);
+      break;
+    case 'occupation':
+      searchResults = searchByOccupation(people);
+      break;
+    case 'parents':
+      searchResults = searchByParents(people);
+      break;
+    case 'current spouse':
+      searchResults = searchByCurrentSpouse(people);
+      break;
+      default:
+        app(people);
+        break;
   }
+  displayPeople(people);
 }
 
 // Menu function to call once you find who you are looking for
