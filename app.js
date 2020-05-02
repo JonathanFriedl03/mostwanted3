@@ -80,23 +80,22 @@ function getSpouse(people, person){
   }
 }
 function getParents(people, person){
-  let parents = [];
+ 
   let personName = `${person[0].firstName} ${person[0].lastName}`;
-  for(var i = 0; i < person.length; i++){
-    if(person.parents[0].includes(people[i].id)){
-      parents.push(people[i]);
-  //   }|| people[0].id === person.parents[1]){
-      alert(`${people[i].firstName} ${people[i].lastName} the parent of ${personName}.`); 
-  //     return true;        
-  //   }
-  //   else{
-  //     return false;
-  //   } 
-  return parents;
+  let parents =  people.filter(function(el){
+    if(person[0].parents[0] ===el.id || person[0].parents[1] === el.id){
+      return true;
+    }else{
+      return false;
     }
-  }
-   
+  });  
+ alert(`${people[0].firstName} ${people[0].lastName} & ${people[1].firstName} ${people[1].lastName} are the parents of ${personName}.`); 
+  
+  return parents;
 }
+  
+   
+
 //   });
 //   let parentsArray = [];
 //   if(parents.length != 0){
