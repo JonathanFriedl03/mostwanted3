@@ -24,56 +24,6 @@ function app(people){
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
-function searchOptions(people){
-  let searchBy = promptFor("How Would You Like To Search by a Single Trait or by Multiple (up to five) if One Please Enter '1' if Multiple Please Enter '2'", chars);
-  let searchResults;
-  switch(searchBy){
-    case "1":
-      searchResults = chooseTheTraitToSearch(people);
-      break;
-    case "2":
-      searchResults = searchForByMultipleTraits(people);
-      break;
-    default:
-      app(people);
-      break;
-  } 
-  mainMenu(searchResults, people);
-}
-function chooseTheTraitToSearch(people){
-  let searchTrait = promptFor("How Would You Like to Search You Can Search By 'gender' 'dob' 'height' 'weight' 'eye color' 'occupation' 'parents' or by the Person's 'current spouse'? ", chars);
-  let searchResults;
-  switch (searchTrait){
-    case 'gender':
-      searchResults = searchByGender(people);
-      break;
-    case 'dob':
-      searchResults = searchByDob(people);
-      break;
-    case 'height':
-      searchResults = searchByHeight(people);
-      break;
-    case 'weight':
-      searchResults = searchByWeight(people);
-      break;
-    case 'eye color':
-      searchResults = searchByEyeColor(people);
-      break;
-    case 'occupation':
-      searchResults = searchByOccupation(people);
-      break;
-    case 'parents':
-      searchResults = searchByParents(people);
-      break;
-    case 'current spouse':
-      searchResults = searchByCurrentSpouse(people);
-      break;
-      default:
-        app(people);
-        break;
-  }
-  displayPeople(people);
-}
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
@@ -139,19 +89,13 @@ function getParents(people, person){
       return false;
     }
   });  
- alert(`${people[0].firstName} ${people[0].lastName} & ${people[1].firstName} ${people[1].lastName} are the parents of ${personName}.`); 
+ alert(`${parents[0].firstName} ${parents[0].lastName} & ${parents[1].firstName} ${parents[1].lastName} are the parents of ${personName}.`); 
   
   return parents;
 }
-  
    
 
-//   });
-//   let parentsArray = [];
-//   if(parents.length != 0){
-// people.filter(function(people){
-//     for (var i = 0; i < person[0].parents.length; i++){
-  
+
   
 
 function getSiblings(people, person){
@@ -194,11 +138,11 @@ function searchByName(people){
  
 }
 function searchOptions(){
-  let input = promptFor("Which trait would you like to search by?" + "\n" + "1: Gender" + "\n" + "2: Height" + "\n" + "3: Weight" + "\n" + "4: Eye Color" + "\n" + "5: Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
+  let input = promptFor("Which trait would you like to search by?" + "\n" + "1: Gender" + "\n" + "2: Height" + "\n" + "3: Weight" + "4: Eye Color" + "\n" + "5: Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
   return input;
 
 }
-/* function runSearch(people) {
+function runSearch(people) {
   let peopleFound = people;
   let input = searchOptions();
   peopleFound = searchBySingleTrait(foundPeople,input,people);
@@ -207,14 +151,10 @@ function searchOptions(){
         alert("Let's try a new search.");
         runSearch(people); //start over
       }else{
-        switch(peopleFound){
-          case "1":
-            'gender' = people.gender.
-        }
-        displayPeople(people);
+        displayPeople(foundPeople);
       }
   runSearch(people);
-} */
+}
 // function searchBySingleTrait(foundPeople,input,people){ 
 //   let = trait;
 //   let = userChoice;
@@ -306,6 +246,8 @@ function searchForByMultipleTraits(people){
 
   }
 }
+
+
 
 // alerts a list of people
 function displayPeople(people){
