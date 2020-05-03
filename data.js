@@ -190,7 +190,7 @@ const data = [
 		"dob": "8/5/1967",
 		"height": 61,
 		"weight": 112,
-		"eyeColor": "green",
+		"1": "green",
 		"occupation": "doctor",
 		"parents": [629807187, 464142841],
 		"currentSpouse": 878013758

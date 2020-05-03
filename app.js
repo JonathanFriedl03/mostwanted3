@@ -334,10 +334,10 @@ function getOccupation(people){
   return foundPeople;
 }
 function getAge(people){
-  let userChoice = promptFor(`What is the persons age?`,integers);
-
+  let userChoice = promptFor(`What is the persons date of birth?\nFormat: MM/DD/YYYY`,integers);
+     userChoice = actualAge(userChoice);
   let foundPeople = people.filter(function(el){
-    if(el.age == userChoice){
+    if(actualAge(el.dob) == userChoice){
       return true;
     }
   });
@@ -347,6 +347,18 @@ function getAge(people){
   }
   return foundPeople;
 }
+function actualAge(dob){
+let birth = new Date(dob);
+let check = new Date();
+let milliDay = 1000 * 60 * 60 * 24; // a day in milliseconds;
+let ageInDays = (check - birth) / milliDay;
+let ageInYears =  Math.floor(ageInDays / 365 );
+
+
+//alert( 'Whole years : ' + ageInYears  );
+return ageInYears;
+}
+
 
 
 function searchForByMultipleTraits(people){
