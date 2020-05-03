@@ -190,14 +190,15 @@ function getDescendants(people, person){
   });descendants.map(function(el){
     for(let i = 0; i < el.parents.length; i++){
       if(el.parents[i] === person[0].id){
-        descendantsArray.push(el);      
+        descendantsArray.push(el);  
+        getDescendants(people,descendantsArray);     
       }
     }
   })
       if(descendantsArray === 0){
         alert(`${personName} has no descendants`)
       }else{
-        getDescendants(people,descendantsArray);       
+              
       }
   return descendantsArray;
 }
@@ -223,61 +224,62 @@ function searchByName(people){
  
 }
 function searchOptions(){
-  let input = promptFor("Which trait would you like to search by?" + "\n" + "1: Gender" + "\n" + "2: Height" + "\n" + "3: Weight" + "4: Eye Color" + "\n" + "5: Occupation" + "\n" + "Please Select a number or restart to start over.").toLowerCase();
-  return input;
+  let input = promptFor(`Which trait would you like to search by?\n1: Gender\n2: Height\n3: Weight\n4: Eye Color\n5: Occupation\nPlease Select a number or restart to start over.`, integer).toLowerCase();
+  searchBySingleTrait(input,people);  
 
 }
-function runSearch(people) {
-  let peopleFound = people;
-  let input = searchOptions();
-  peopleFound = searchBySingleTrait(foundPeople,input,people);
-  if(!peopleFound)
-      {
-        alert("Let's try a new search.");
-        runSearch(people); //start over
-      }else{
-        displayPeople(foundPeople);
-      }
-  runSearch(people);
-}
-// function searchBySingleTrait(foundPeople,input,people){ 
-//   let = trait;
-//   let = userChoice;
-//   let peopleFound;
-// switch(input){
-//   case"1":
-//       trait = "gender";
-//       userChoice = promptFor("Is the person male or female?").toLowerCase();
-//       peopleFound = getPeople(trait,userChoice,foundPeople);
-//   break;
-//   case "2":
-//       trait = "height";
-//       userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
-//       peopleFound = getPeople(trait,userChoice,foundPeople);
-//     break;
-//     case "3":
-//       trait = "weight";
-//       userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
-//       peopleFound = getPeople(trait,userChoice,foundPeople);
-//     break;
-//     case "4":
-//       trait = "eyecolor";
-//       userChoice = promptFor("What is the persons eye color?", chars);
-//       peopleFound = getPeople(trait,userChoice,foundPeople);
-//       break;
-//       case "5":
-//       trait = "occupation";
-//       userChoice = promptFor("What is the persons" + trait + "?", chars);
-//       peopleFound = getPeople(trait,userChoice,foundPeople);
-//       break;
-//   case "restart":
-//     app(people);
-//     break;
-//     default:
-//       return runSearch(people);
-//   }
-// return peopleFound;
+
+// function runSearch(people) {
+//   let peopleFound = people;
+//   let input = searchOptions();
+//   peopleFound = searchBySingleTrait(foundPeople,input,people);
+//   if(!peopleFound)
+//       {
+//         alert("Let's try a new search.");
+//         runSearch(people); //start over
+//       }else{
+//         displayPeople(foundPeople);
+//       }
+//   runSearch(people);
 // }
+function searchBySingleTrait(input,people){ 
+  let  trait;
+  let  userChoice;
+  let peopleFound;
+switch(input){
+  case"1":
+      trait = "gender";
+      userChoice = promptFor("Is the person male or female?").toLowerCase();
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+  break;
+  case "2":
+      trait = "height";
+      userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+    break;
+    case "3":
+      trait = "weight";
+      userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+    break;
+    case "4":
+      trait = "eyecolor";
+      userChoice = promptFor("What is the persons eye color?", chars);
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+      break;
+      case "5":
+      trait = "occupation";
+      userChoice = promptFor("What is the persons" + trait + "?", chars);
+      peopleFound = getPeople(trait,userChoice,foundPeople);
+      break;
+  case "restart":
+    app(people);
+    break;
+    default:
+      return runSearch(people);
+  }
+return peopleFound;
+}
 
 function getPeople(trait,userChoice,foundPeople) {
   foundPeople = foundPeople.filter(function(person){
@@ -379,4 +381,22 @@ function yesNo(input){
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
+}
+
+// helper function, ensures input is a number
+function integer(input)
+{
+   var result = (input - Math.floor(input)) !== 0; 
+   
+  if (result)
+      
+    return 'Number has a decimal place.';
+   else{numInRange(result);
+    return //finish logic here
+   }
+    
+  }
+function numInRange(input){
+  if(input > 5 < 1)
+  return `Please enter a number 1 - 5`;
 }
