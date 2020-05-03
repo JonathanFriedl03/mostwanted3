@@ -178,15 +178,27 @@ if(spouse === undefined){
     alert(personName);
   
 }
-
- function getDescendants(people, person){
-  let descendantsArray = [];
-  peoople.map(function(el){
-    if(person.id === el.parents[0] || person.id === el.parents[1]){
-      descendantsArray.push(el);
-      descendantsArray(el, people, descendantsArray);
+var descendantsArray = [];
+function getDescendants(people, person){  
+  let descendants = people.filter(function(el){    
+      if(el.parents.length !== 0){
+        return true;
+       } else{
+          return false;
+        }           
+    
+  });descendants.map(function(el){
+    for(let i = 0; i < el.parents.length; i++){
+      if(el.parents[i] === person[0].id){
+        descendantsArray.push(el);      
+      }
     }
   })
+      if(descendantsArray === 0){
+        alert(`${personName} has no descendants`)
+      }else{
+        getDescendants(people,descendantsArray);       
+      }
   return descendantsArray;
 }
 function searchByName(people){
