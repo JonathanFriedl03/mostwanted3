@@ -98,7 +98,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
-    searchForDescendants(person, people);
+    getDescendants(person, people);    
     break;
     case "restart":
     app(people); // restart
@@ -185,11 +185,24 @@ let descendants = people.filter(function(descendants){
 if(counter > 0){
 return searchForDescendants(counter-1, person, people);
 }
-person = descendants;
-searchForDescendants(1, person, people);
-console.log(descendants);
-displayPeople(descendants);
+
+function getDescendants(person, people){  
+  let descendants = people.filter(function(el){    
+      if(el.parents.includes(person.id)){
+        return true;
+       } else{
+          return false;
+        }         
+    });  
+    for(let i = 0; i < descendants.length; i++){
+      var results = getDescendants(descendants[i],people);     
+      if(results.length > 0){          
+      descendants.push(results[0]);
+      }
+    }
+    return descendants;
 }
+       
 
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
