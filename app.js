@@ -233,8 +233,7 @@ switch(input){
       foundPeople = genderSearch(people);     
   break;
   case "2"://height      
-      userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
-      peopleFound = getPeople(trait,userChoice,foundPeople);
+      foundPeople = getHeight(people);      
     break;
     case "3"://weight     
       userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
@@ -267,6 +266,20 @@ function genderSearch(people){
      noCriteria();
      return app(data);
    }
+  return foundPeople;
+}
+function getHeight(people){
+  let userChoice = promptFor(`What is the persons height in inches?`,integers);
+
+  let foundPeople = people.filter(function(el){
+    if(el.height == userChoice){
+      return true;
+    }
+  });
+  if(foundPeople=== undefined || foundPeople.length ===0){
+    noCriteria();
+    return app(people);
+  }
   return foundPeople;
 }
 
