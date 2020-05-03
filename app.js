@@ -224,7 +224,7 @@ function searchByName(people){
  }
 
 function searchByTraits(people){   
-  let input = promptFor(`Which trait would you like to search by?\n1: Gender\n2: Height\n3: Weight\n4: Eye Color\n5: Occupation\nPlease Select a number or restart to start over.`,integers);
+  let input = promptFor(`Which trait would you like to search by?\n1: Gender\n2: Height\n3: Weight\n4: Eye Color\n5: Occupation\n6: DOB\nPlease Select a number or restart to start over.`,integers);
  
   let foundPeople = [];
   let peopleFound;
@@ -236,24 +236,33 @@ switch(input){
       foundPeople = getHeight(people);      
     break;
     case "3"://weight     
-      userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
-      peopleFound = getPeople(trait,userChoice,foundPeople);
+      foundPeople = getWeight(people);      
     break;
     case "4"://eye color      
-      userChoice = promptFor("What is the persons eye color?", chars);
-      peopleFound = getPeople(trait,userChoice,foundPeople);
+      foundPeople = getEyes(people);      
       break;
       case "5"://occupation      
-      userChoice = promptFor("What is the persons" + trait + "?", chars);
-      peopleFound = getPeople(trait,userChoice,foundPeople);
+      foundPeople = getOccupation(people);      
+      break;
+      case "6"://DOB      
+      foundPeople = getAge(people);      
       break;
   case "restart":
     app(people);
     break;
     default:
+      alert(`Something went wrong let's try again.`);
       return runSearch(people);
   }
-return peopleFound;
+  if (foundPeople.length > 1) {
+    displayPeople(foundPeople);
+    searchByTraits(foundPeople);
+  } else if (foundPeople.length === 1) {
+    let foundPerson = foundPeople[0];
+    mainMenu(foundPerson, people);
+  } else {
+    app(data);
+  }
 }
 function genderSearch(people){
  let userChoice = promptFor("Is the person male or female?", validateGender);
@@ -282,6 +291,63 @@ function getHeight(people){
   }
   return foundPeople;
 }
+function getWeight(people){
+  let userChoice = promptFor(`What is the persons weight in inches?`,integers);
+
+  let foundPeople = people.filter(function(el){
+    if(el.weight == userChoice){
+      return true;
+    }
+  });
+  if(foundPeople=== undefined || foundPeople.length ===0){
+    noCriteria();
+    return app(people);
+  }
+  return foundPeople;
+}
+function getEyes(people){
+  let userChoice = promptFor("What is the persons eye color?", chars);
+
+  let foundPeople = people.filter(function(el){
+    if(el.eyeColor == userChoice){
+      return true;
+    }
+  });
+  if(foundPeople=== undefined || foundPeople.length ===0){
+    noCriteria();
+    return app(people);
+  }
+  return foundPeople;
+}
+function getOccupation(people){
+  let userChoice = promptFor("What is the persons occupation?", chars);
+
+  let foundPeople = people.filter(function(el){
+    if(el.occupation == userChoice){
+      return true;
+    }
+  });
+  if(foundPeople=== undefined || foundPeople.length ===0){
+    noCriteria();
+    return app(people);
+  }
+  return foundPeople;
+}
+function getAge(people){
+  let userChoice = promptFor(`What is the persons age?`,integers);
+
+  let foundPeople = people.filter(function(el){
+    if(el.age == userChoice){
+      return true;
+    }
+  });
+  if(foundPeople=== undefined || foundPeople.length ===0){
+    noCriteria();
+    return app(people);
+  }
+  return foundPeople;
+}
+
 
 function searchForByMultipleTraits(people){
   let searchfor = promptFor("What would you like to  search for 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
