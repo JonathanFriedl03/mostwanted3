@@ -12,7 +12,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      searchReasults = searchOptions(people)
+      searchByTraits(people);
       break;
       default:
         alert("Invalid input. Please try again!");
@@ -48,7 +48,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
-    getDescendants(people, person, personName);    
+    getDescendants(person, people, personName);    
     break;
     case "restart":
     app(people); // restart
@@ -179,7 +179,7 @@ if(spouse === undefined){
   
 }
 var descendantsArray = [];
-function getDescendants(people, person){  
+function getDescendants(person, people){  
   let descendants = people.filter(function(el){    
       if(el.parents.length !== 0){
         return true;
@@ -187,11 +187,11 @@ function getDescendants(people, person){
           return false;
         }           
     
-  });descendants.map(function(el){
+  });descendants.filter(function(el){
     for(let i = 0; i < el.parents.length; i++){
-      if(el.parents[i] === person[0].id){
+      if(el.parents[i] === person.id){
         descendantsArray.push(el);  
-        getDescendants(people,descendantsArray);     
+        getDescendants(people,el);     
       }
     }
   })
@@ -221,54 +221,30 @@ function searchByName(people){
   }else{
     return foundPerson;
   }
+ }
+
+function searchByTraits(people){   
+  let input = promptFor(`Which trait would you like to search by?\n1: Gender\n2: Height\n3: Weight\n4: Eye Color\n5: Occupation\nPlease Select a number or restart to start over.`,integers);
  
-}
-function searchOptions(){
-  let input = promptFor(`Which trait would you like to search by?\n1: Gender\n2: Height\n3: Weight\n4: Eye Color\n5: Occupation\nPlease Select a number or restart to start over.`, integer).toLowerCase();
-  searchBySingleTrait(input,people);  
-
-}
-
-// function runSearch(people) {
-//   let peopleFound = people;
-//   let input = searchOptions();
-//   peopleFound = searchBySingleTrait(foundPeople,input,people);
-//   if(!peopleFound)
-//       {
-//         alert("Let's try a new search.");
-//         runSearch(people); //start over
-//       }else{
-//         displayPeople(foundPeople);
-//       }
-//   runSearch(people);
-// }
-function searchBySingleTrait(input,people){ 
-  let  trait;
-  let  userChoice;
+  let foundPeople = [];
   let peopleFound;
 switch(input){
-  case"1":
-      trait = "gender";
-      userChoice = promptFor("Is the person male or female?").toLowerCase();
-      peopleFound = getPeople(trait,userChoice,foundPeople);
+  case"1"://gender           
+      foundPeople = genderSearch(people);     
   break;
-  case "2":
-      trait = "height";
+  case "2"://height      
       userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
       peopleFound = getPeople(trait,userChoice,foundPeople);
     break;
-    case "3":
-      trait = "weight";
+    case "3"://weight     
       userChoice = parseInt(promptFor("What is the persons" + trait + "in inches?"));
       peopleFound = getPeople(trait,userChoice,foundPeople);
     break;
-    case "4":
-      trait = "eyecolor";
+    case "4"://eye color      
       userChoice = promptFor("What is the persons eye color?", chars);
       peopleFound = getPeople(trait,userChoice,foundPeople);
       break;
-      case "5":
-      trait = "occupation";
+      case "5"://occupation      
       userChoice = promptFor("What is the persons" + trait + "?", chars);
       peopleFound = getPeople(trait,userChoice,foundPeople);
       break;
@@ -280,18 +256,19 @@ switch(input){
   }
 return peopleFound;
 }
-
-function getPeople(trait,userChoice,foundPeople) {
-  foundPeople = foundPeople.filter(function(person){
-    if(person[trait] === userChoice){
+function genderSearch(people){
+ let userChoice = promptFor("Is the person male or female?", validateGender);
+    let foundPeople = people.filter(function(el){
+    if(el.gender === userChoice) {      
       return true;
-    }else {
-      return false;
     }
-  })
+  });
+   if(foundPeople === undefined|| foundPeople.length === 0){
+     noCriteria();
+     return app(data);
+   }
   return foundPeople;
 }
-
 
 function searchForByMultipleTraits(people){
   let searchfor = promptFor("What would you like to  search for 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
@@ -383,20 +360,34 @@ function chars(input){
   return true; // default validation only
 }
 
-// helper function, ensures input is a number
+function integers(input){
+  if(parseInt(input)){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+// helper function, ensures input is a whole number
 function integer(input)
 {
    var result = (input - Math.floor(input)) !== 0; 
    
   if (result)
       
-    return 'Number has a decimal place.';
-   else{numInRange(result);
-    return //finish logic here
-   }
+    return true;
+   else return false;//finish logic here
+   
     
   }
 function numInRange(input){
   if(input > 5 < 1)
   return `Please enter a number 1 - 5`;
+}
+function noCriteria(){
+  alert(`Could not find a trait match!`);
+}
+function validateGender(input){
+  return input.toLowerCase() == "male" || input.toLowerCase() == "female";
 }
