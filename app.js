@@ -2,7 +2,6 @@
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
-
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -27,7 +26,7 @@ function app(people){
 
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
-
+  let personName = `${person[0].firstName} ${person[0].lastName}`;
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
@@ -35,7 +34,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  var displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  var displayOption = prompt(`Found ${personName}. Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'`);
 
   switch(displayOption){
     case "info":
@@ -44,7 +43,7 @@ function mainMenu(person, people){
     break;
     case "family":
     // TODO: get person's family
-    searchForFamily(people, person);
+    searchForFamily(people,person, personName);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -60,60 +59,70 @@ function mainMenu(person, people){
   }
 }
 
-function searchForFamily(people,person){
-  let spouse;  
-  let siblingsArray = [];
+function searchForFamily(people,person,personName){
+ 
   let descendantsArray = [];
-  spouse = getSpouse(people, person);
-  parentsArray = getParents(people, person);
-  siblingsArray = getSiblings(people, person, siblingsArray);
-  descendantsArray = getChildren(people, person, descendantsArray);
-  
+  let spouse = getSpouse(people, person,personName);
+  let parentsArray = getParents(people, person, personName);
+  let siblingsArray = getSiblings(people, person,  personName);
+  descendantsArray = getChildren(people, person, personName, descendantsArray);
+  displayFamily(spouse, parentsArray, siblingsArray, descendantsArray);
 }
-function getSpouse(people, person){  
+function getSpouse(people, person,personName){  
+  let spouse;
   for (var i = 0; i < people.length; i++){
     if(people[i].id === person[0].currentSpouse){
-    alert(`${person[0].firstName} ${person[0].lastName} is married to ${people[i].firstName} ${people[i].lastName}.`);
-    return people[i];
+    alert(`${personName} is married to ${people[i].firstName} ${people[i].lastName}.`);
+    return spouse;
       
     }
-  }
+     
+    
+  } alert(`${personName} is not married.`)
+  return false;
 }
-function getParents(people, person){
- 
-  let personName = `${person[0].firstName} ${person[0].lastName}`;
-  let parents =  people.filter(function(el){
+function getParents(people, person,personName){ 
+ let parentsArray = [];
+  parentsArray =  people.filter(function(el){
     if(person[0].parents[0] ===el.id || person[0].parents[1] === el.id){
+      parentsArray.push(el);
       return true;
     }else{
       return false;
     }
-  });  
- alert(`${parents[0].firstName} ${parents[0].lastName} & ${parents[1].firstName} ${parents[1].lastName} are the parents of ${personName}.`); 
+  });  if(parentsArray.length > 1){
+    alert(`${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} are the parents of ${personName}.`); 
   
-  return parents;
+  }else if(parentsArray.length === 1){
+    alert(`${parentsArray[0].firstName} ${parentsArray[0].lastName} is the parent of ${personName}.`); 
+  }else{
+    alert(`${personName} was created from thin air! It's jsut an app..don't hurt yourself trying to understand..you won't!`); 
+  }
+ 
+  return parentsArray;
 }
    
 
 
   
 
-function getSiblings(people, person){
+function getSiblings(people, person){  
   let siblingsArray = [];
-  people.filter(function(people){
-    for (var i = 0; i < person.parents.length; i++){
-      for(var j = 0; j < person.parents.length; j++){
-        if(people.parents[i] === person.parents[j]){
-          console.log(people.firstName + "" + people.lastName + " are " + person.firstName + "" + person.lastName +" siblings."); parentsArray.push(el);
-          return true;        
-        }
-        else{
-          return false;
-        } 
-      }
-     
-    }
-  });return siblingsArray;
+  siblingsArray = people.filter(function(el){
+    for (var i = 0; i < people.length; i++)
+    if(el.parents.length == 0 || person[0].id === el.id){
+      return false
+    }else if(el.parents[0] == person[0].parents[0] || el.parents[1] == person[0].parents[1] ){
+      siblingsArray.push(el);
+      return true;
+    }           
+         
+         else{
+           return false;
+         }     
+    });   
+  
+  return siblingsArray;
 }
 
 function searchByName(people){
