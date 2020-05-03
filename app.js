@@ -44,10 +44,11 @@ function mainMenu(person, people){
     case "family":
     // TODO: get person's family
     searchForFamily(people,person, personName);
+    displayFamily
     break;
     case "descendants":
     // TODO: get person's descendants
-    searchForDescendants(person, people);
+    getDescendants(people, person, personName);    
     break;
     case "restart":
     app(people); // restart
@@ -61,25 +62,22 @@ function mainMenu(person, people){
 
 function searchForFamily(people,person,personName){
  
-  let descendantsArray = [];
+  
   let spouse = getSpouse(people, person,personName);
   let parentsArray = getParents(people, person, personName);
-  let siblingsArray = getSiblings(people, person,  personName);
-  descendantsArray = getChildren(people, person, personName, descendantsArray);
-  displayFamily(spouse, parentsArray, siblingsArray, descendantsArray);
+  let siblingsArray = getSiblings(people, person,  personName);  
+  let childrenArray = getChildren(people, person, personName);
+  displayFamily(spouse,childrenArray, parentsArray, siblingsArray, personName,person);
 }
-function getSpouse(people, person,personName){  
-  let spouse;
+function getSpouse(people, person,personName){    
   for (var i = 0; i < people.length; i++){
     if(people[i].id === person[0].currentSpouse){
     alert(`${personName} is married to ${people[i].firstName} ${people[i].lastName}.`);
-    return spouse;
-      
-    }
-     
+    return people[i];      
+    }     
     
   } alert(`${personName} is not married.`)
-  return false;
+  
 }
 function getParents(people, person,personName){ 
  let parentsArray = [];
@@ -96,18 +94,14 @@ function getParents(people, person,personName){
   }else if(parentsArray.length === 1){
     alert(`${parentsArray[0].firstName} ${parentsArray[0].lastName} is the parent of ${personName}.`); 
   }else{
-    alert(`${personName} was created from thin air! It's jsut an app..don't hurt yourself trying to understand..you won't!`); 
-  }
- 
+    alert(`${personName} was created from thin air! It's just an app..don't hurt yourself trying to understand..you won't!`); 
+  } 
   return parentsArray;
 }
-   
-
-
   
 
-function getSiblings(people, person){  
-  let siblingsArray = [];
+function getSiblings(people, person){   
+  let siblingsArray = []; 
   siblingsArray = people.filter(function(el){
     for (var i = 0; i < people.length; i++)
     if(el.parents.length == 0 || person[0].id === el.id){
@@ -125,6 +119,76 @@ function getSiblings(people, person){
   return siblingsArray;
 }
 
+function getChildren(people, person, personName){
+  let childrenArray = [];
+  childrenArray = people.filter(function(el){
+    for(let i = 0; i < people.length; i++){
+      if(person[0].id == el.parents[0]  || person[0].id == el.parents[1] ){
+        childrenArray.push(el);
+        return true;
+      }else{
+            return false;
+        }             
+    }
+  });  if(childrenArray.length === 0){
+          alert(`${personName} has no children`);
+        }else{
+              for(let i = 0; i < childrenArray.length; i++){
+              alert(`${childrenArray[i].firstName} ${childrenArray[i].lastName} `);
+              }
+         }return childrenArray;
+}
+
+function displayFamily(spouse,childrenArray, parentsArray, siblingsArray, personName,person){
+//print persons info
+personName +=` Family info: \nCurrent Spouse: `;
+if(spouse === undefined){
+  personName+= ` Not Married\n`;
+ } else{  
+    personName += `${spouse.firstName} ${spouse.lastName} \n`;
+  }
+  
+  personName+=`Parent(s): `;
+  if( person[0].id === 159819275  ){
+    personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} two men ..impossible.. I get it.\n`;
+  }else if( parentsArray.length > 1 ){
+    personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} \n`;
+  }
+  else if(parentsArray.length === 1){
+    personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName}.\n`; 
+  }else{
+    personName += `${person[0].firstName} was created from thin air! It's just an app..don't hurt yourself trying to understand..you won't!\n`; 
+  }
+  personName += `Siblings: `;
+  if(siblingsArray.length === 0){
+    personName += `None\n`;
+  }else{
+    for(let i = 0; i < siblingsArray.length; i++){
+      personName += `${siblingsArray[i].firstName} ${siblingsArray[i].lastName} `;      
+    }personName += `\n`;
+  }
+  personName += `Children: `;
+  if(childrenArray.length === 0){
+    personName += `None`
+  }else{
+    for(let i = 0; i < childrenArray.length; i++){
+      personName += `${childrenArray[i].firstName} ${childrenArray[i].lastName} `
+    }
+  }
+    alert(personName);
+  
+}
+
+ function getDescendants(people, person){
+  let descendantsArray = [];
+  peoople.map(function(el){
+    if(person.id === el.parents[0] || person.id === el.parents[1]){
+      descendantsArray.push(el);
+      descendantsArray(el, people, descendantsArray);
+    }
+  })
+  return descendantsArray;
+}
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
   let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
