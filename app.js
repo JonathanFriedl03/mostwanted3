@@ -48,7 +48,7 @@ function mainMenu(person, people){
     break;
     case "descendants":
     // TODO: get person's descendants
-    getDescendants(person, people, personName);    
+    getDescendants(person, people);    
     break;
     case "restart":
     app(people); // restart
@@ -178,30 +178,25 @@ if(spouse === undefined){
     alert(personName);
   
 }
-var descendantsArray = [];
+
 function getDescendants(person, people){  
   let descendants = people.filter(function(el){    
-      if(el.parents.length !== 0){
+      if(el.parents.includes(person.id)){
         return true;
        } else{
           return false;
-        }           
-    
-  });descendants.filter(function(el){
-    for(let i = 0; i < el.parents.length; i++){
-      if(el.parents[i] === person.id){
-        descendantsArray.push(el);  
-        getDescendants(people,el);     
+        }         
+    });  
+    for(let i = 0; i < descendants.length; i++){
+      var results = getDescendants(descendants[i],people);     
+      if(results.length > 0){          
+      descendants.push(results[0]);
       }
     }
-  })
-      if(descendantsArray === 0){
-        alert(`${personName} has no descendants`)
-      }else{
-              
-      }
-  return descendantsArray;
+    return descendants;
 }
+       
+
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
   let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
