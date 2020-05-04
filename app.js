@@ -187,9 +187,6 @@ function getDescendants(person, people){
       descendants.push(results[0]);
       }
     }
-    
-
-    alert(descendants.getDescendants);
 }
        
 
@@ -352,8 +349,23 @@ function searchByGender(people){
    }
   })
   displayPeople(foundPerson)
+
 }
 
+function searchByDob(people){
+  let dob = promptFor("Please enter 'dob' in this format with numbers: mm/dd/yyyy", chars);
+
+  let foundPerson = people.filter(function(person){
+   if(person.dob === dob){
+     return true;
+   }
+   else{
+     return false;
+   }
+  })
+  displayPeople(foundPerson)
+  return foundPeople
+}
 
 function displayPerson(person){
   // print all of the information about a person:
