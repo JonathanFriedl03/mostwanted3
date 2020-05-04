@@ -2,7 +2,6 @@
 /*
 Build all of your functions for displaying and gathering information below (GUI).
 */
-
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -20,7 +19,6 @@ function app(people){
     app(people); // restart app
       break;
   }
-  
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
@@ -74,20 +72,15 @@ function chooseTheTraitToSearch(people){
   }
   displayPeople(people);
 }
-
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
-
-  let personName = `${person[0].firstName} ${person[0].lastName}`;
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
   let personName = `${person[0].firstName} ${person[0].lastName}`;
-
   if(!person){
     alert("Could not find that individual.");
     return app(people); // restart
   }
    var displayOption = prompt(`Found ${personName}. Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'`);
-
   switch(displayOption){
     case "info":
     // TODO: get person's info
@@ -111,7 +104,6 @@ function mainMenu(person, people){
     return mainMenu(person, people); // ask again
   }
 }
-
 function searchForFamily(people,person,personName){
   let spouse = getSpouse(people, person,personName);
   let parentsArray = getParents(people, person, personName);
@@ -125,10 +117,8 @@ function getSpouse(people, person,personName){
       alert(`${personName} is married to ${people[i].firstName} ${people[i].lastName}.`);
     return people[i];      
     }     
-
   } alert(`${personName} is not married.`)
 }
-
 function getParents(people, person,personName){ 
   let parentsArray = [];
    parentsArray =  people.filter(function(el){
@@ -138,10 +128,8 @@ function getParents(people, person,personName){
      }else{
        return false;
       }
-    
     });  if(parentsArray.length > 1){
       alert(`${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} are the parents of ${personName}.`); 
-  
     }else if(parentsArray.length === 1){
       alert(`${parentsArray[0].firstName} ${parentsArray[0].lastName} is the parent of ${personName}.`); 
     }else{
@@ -159,15 +147,12 @@ function getParents(people, person,personName){
         siblingsArray.push(el);
         return true;
       }           
-  
            else{
              return false;
            }     
       });   
-  
     return siblingsArray;
   }
-  
   function getChildren(people, person, personName){
     let childrenArray = [];
     childrenArray = people.filter(function(el){
@@ -187,8 +172,6 @@ function getParents(people, person,personName){
                   }
              }return childrenArray;    
             }        
-
-
 function getChildren(people, person, personName){
   let childrenArray = [];
   childrenArray = people.filter(function(el){
@@ -208,46 +191,6 @@ function getChildren(people, person, personName){
                 }
            }return childrenArray;
           }
-
-          function displayFamily(spouse,childrenArray, parentsArray, siblingsArray, personName,person){
-            //print persons info
-            personName +=` Family info: \nCurrent Spouse: `;
-            if(spouse === undefined){
-              personName+= ` Not Married\n`;
-             } else{  
-                personName += `${spouse.firstName} ${spouse.lastName} \n`;
-              }
-            
-              personName+=`Parent(s): `;
-              if( person[0].id === 159819275  ){
-                personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} two men ..impossible.. I get it.\n`;
-              }else if( parentsArray.length > 1 ){
-                personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} \n`;
-              }
-              else if(parentsArray.length === 1){
-                personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName}.\n`; 
-              }else{
-                personName += `${person[0].firstName} was created from thin air! It's just an app..don't hurt yourself trying to understand..you won't!\n`; 
-              }
-              personName += `Siblings: `;
-              if(siblingsArray.length === 0){
-                personName += `None\n`;
-              }else{
-                for(let i = 0; i < siblingsArray.length; i++){
-                  personName += `${siblingsArray[i].firstName} ${siblingsArray[i].lastName} `;      
-                }personName += `\n`;
-              }
-              personName += `Children: `;
-              if(childrenArray.length === 0){
-                personName += `None`
-              }else{
-                for(let i = 0; i < childrenArray.length; i++){
-                  personName += `${childrenArray[i].firstName} ${childrenArray[i].lastName} `
-                }
-              }
-            }
-          
-
             function displayFamily(spouse,childrenArray, parentsArray, siblingsArray, personName,person){
               //print persons info
               personName +=` Family info: \nCurrent Spouse: `;
@@ -256,7 +199,6 @@ function getChildren(people, person, personName){
                } else{  
                   personName += `${spouse.firstName} ${spouse.lastName} \n`;
                 }
-              
                 personName+=`Parent(s): `;
                 if( person[0].id === 159819275  ){
                   personName += `${parentsArray[0].firstName} ${parentsArray[0].lastName} & ${parentsArray[1].firstName} ${parentsArray[1].lastName} two men ..impossible.. I get it.\n`;
@@ -286,26 +228,27 @@ function getChildren(people, person, personName){
                 }
                 alert(personName);
               }
-            
-                
-  
-              function getDescendants(person, people){  
+              function getDescendants(person, people, descendantsArray = []){  
                 let descendants = people.filter(function(el){    
-                    if(el.id){
+                    if(el.parents.length !== 0){
                       return true;
                      } else{
                         return false;
-                      }         
-                  });  
-                  for(let i = 0; i < descendants.length; i++){
-                    var results = getDescendants(descendants[i],people);     
-                    if(results.length > 0){          
-                    descendants.push(results[0]);
+                      }           
+                });descendants.filter(function(el){
+                  for(let i = 0; i < el.parents.length; i++){
+                    if(el.parents[i] === person.id){
+                      descendantsArray.push(el);  
+                      getDescendants(el, people, descendantsArray);     
                     }
                   }
-                  return descendants;
-              }
-                     
+                })
+                    if(descendantsArray === 0){
+                      alert(`${personName} has no descendants`)
+                    }else{
+                    }
+                return descendantsArray;
+                  }
               function searchByName(people){
                 let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
                 let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
@@ -322,13 +265,11 @@ function getChildren(people, person, personName){
                   alert("Sorry that person is not in the database.")
                   return app(people);
                 }else{
-                  return foundPerson;
+                  return foundPerson[0];
                 }
                }
-              
               function searchByTraits(people){   
                 let input = promptFor(`Which trait would you like to search by?\n1: Gender\n2: Height\n3: Weight\n4: Eye Color\n5: Occupation\n6: DOB\nPlease Select a number or restart to start over.`,integers);
-              
                 let foundPeople = [];
                 let peopleFound;
               switch(input){
@@ -393,10 +334,8 @@ function getHeight(people){
   }
   return foundPeople;
 }
-
 function getWeight(people){
   let userChoice = promptFor(`What is the persons weight in inches?`,integers);
-
   let foundPeople = people.filter(function(el){
     if(el.weight == userChoice){
       return true;
@@ -408,10 +347,8 @@ function getWeight(people){
   }
   return foundPeople;
 }
-
 function getEyes(people){
   let userChoice = promptFor("What is the persons eye color?", chars);
-
   let foundPeople = people.filter(function(el){
     if(el.eyeColor == userChoice){
       return true;
@@ -423,25 +360,9 @@ function getEyes(people){
   }
   return foundPeople;
 }
-
 function getOccupation(people){
   let userChoice = promptFor("What is the persons occupation?", chars);
   let foundPeople = people.filter(function(el){
-    if(el.occupation == userChoice){
-      return true;
-    }
-  });
-  if(foundPeople=== undefined || foundPeople.length ===0){
-    noCriteria();
-    return app(people);
-  }
-  return foundPeople;
-}
-function getAge(people){
-  let userChoice = promptFor(`What is the persons date of birth?\nFormat: MM/DD/YYYY`,integers);
-     userChoice = actualAge(userChoice);
-  let foundPeople = people.filter(function(el){
-    if(actualAge(el.dob) == userChoice){  let foundPeople = people.filter(function(el){
     if(el.occupation == userChoice){
       return true;
     }
@@ -471,14 +392,9 @@ let check = new Date();
 let milliDay = 1000 * 60 * 60 * 24; // a day in milliseconds;
 let ageInDays = (check - birth) / milliDay;
 let ageInYears =  Math.floor(ageInDays / 365 );
-
-
 //alert( 'Whole years : ' + ageInYears  );
 return ageInYears;
 }
-
-
-
 function searchForByMultipleTraits(people){
   let searchfor = promptFor("What would you like to  search for 'firstName', 'lastName', 'gender', 'dob', 'height', 'weight', 'eyeColor', 'occupation', 'parents', 'currentSpouse'", chars);
   let searchResults;
@@ -518,16 +434,6 @@ function searchForByMultipleTraits(people){
                             break;
   }
 }
-
-// function searchByName(people){
-//   let firstName = promptFor("Please enter a 'First Name' of a person that you would like to search for?", chars);
-
-//   let foundPerson = people.filter(function(person){
-//     if(person.firstName === firstName)
-//   }
-//   )
-// }
-
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
@@ -547,11 +453,9 @@ function displayPerson(person){
   personInfo += "Occupation: " + person[0].occupation + "\n";
   personInfo += "Parents: " + person[0].parents + "\n";
   personInfo += "Current Spouse: " + person[0].currentSpouse + "\n"
-  
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
@@ -566,7 +470,6 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
-
 function integers(input){
   if(parseInt(input)){
     return true;
@@ -575,18 +478,13 @@ function integers(input){
     return false;
   }
 }
-
 // helper function, ensures input is a whole number
 function integer(input)
 {
    var result = (input - Math.floor(input)) !== 0; 
-
   if (result)
-
     return true;
    else return false;//finish logic here
-
-
   }
 function numInRange(input){
   if(input > 5 < 1)
@@ -595,7 +493,6 @@ function numInRange(input){
 function noCriteria(){
   alert(`Could not find a trait match!`);
 }
-
 function validateGender(input){
   return input.toLowerCase() == "male" || input.toLowerCase() == "female";
 }
