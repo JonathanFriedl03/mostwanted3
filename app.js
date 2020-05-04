@@ -181,7 +181,7 @@ if(spouse === undefined){
 
 function getDescendants(person, people){  
   let descendants = people.filter(function(el){    
-      if(el.parents.includes(person.id)){
+      if(el.id){
         return true;
        } else{
           return false;
