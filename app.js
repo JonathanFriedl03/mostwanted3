@@ -173,19 +173,6 @@ function getSiblings(people, person){
   });return siblingsArray;
 }
 
-function searchForDescendants(person, people, counter){ 
-let descendants = people.filter(function(descendants){
-  if(person.id === descendants.parents[0]){
-    return true;
-  }
-  else{
-    return false;
-  } 
-})
-if(counter > 0){
-return searchForDescendants(counter-1, person, people);
-}
-
 function getDescendants(person, people){  
   let descendants = people.filter(function(el){    
       if(el.parents.includes(person.id)){
@@ -200,7 +187,9 @@ function getDescendants(person, people){
       descendants.push(results[0]);
       }
     }
-    return descendants;
+    
+
+    alert(descendants.getDescendants);
 }
        
 
@@ -349,11 +338,22 @@ function searchForByMultipleTraits(people){
 // }
 
 // alerts a list of people
-function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
+
+function searchByGender(people){
+  let gender = promptFor("Please enter a 'male' or 'female'", chars);
+
+  let foundPerson = people.filter(function(person){
+   if(person.gender === gender){
+    
+     return true;
+   }
+   else{
+     return false;
+   }
+  })
+  displayPeople(foundPerson)
 }
+
 
 function displayPerson(person){
   // print all of the information about a person:
