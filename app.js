@@ -185,23 +185,45 @@ let descendants = people.filter(function(descendants){
 if(counter > 0){
 return searchForDescendants(counter-1, person, people);
 }
-
-function getDescendants(person, people){  
+function getDescendants(person, people, descendantsArray = []){  
   let descendants = people.filter(function(el){    
-      if(el.parents.includes(person.id)){
+      if(el.parents.length !== 0){
         return true;
        } else{
           return false;
-        }         
-    });  
-    for(let i = 0; i < descendants.length; i++){
-      var results = getDescendants(descendants[i],people);     
-      if(results.length > 0){          
-      descendants.push(results[0]);
+        }           
+
+  });descendants.filter(function(el){
+    for(let i = 0; i < el.parents.length; i++){
+      if(el.parents[i] === person.id){
+        descendantsArray.push(el);  
+        getDescendants(el, people, descendantsArray);     
       }
     }
-    return descendants;
-}
+  })
+      if(descendantsArray === 0){
+        alert(`${personName} has no descendants`)
+      }else{
+
+      }
+  return descendantsArray;
+    }
+// function getDescendants(person, people){  
+//   let descendants = people.filter(function(el){    
+//       if(el.parents.includes(person.id)){
+//         return true;
+//        } else{
+//           return false;
+//         }         
+//     });  
+//     for(let i = 0; i < descendants.length; i++){
+//       var results = getDescendants(descendants[i],people);     
+//       if(results.length > 0){          
+//       descendants.push(results[0]);
+//       }
+//     }
+//     return descendants;
+// }
        
 
 function searchByName(people){
@@ -209,19 +231,19 @@ function searchByName(people){
   let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
 
   let foundPerson = people.filter(function(person){
-    if((person.firstName).toLowerCase() === firstName && (person.lastName).toLowerCase() === lastName){ 
+    if((person.firstName).toLowerCase() === firstName && (person.lastName).toLowerCase() === lastName){
       return true;
     }
     else{
       return false;
     }
-  })
+  });
   // TODO: find the person using the name they entered
   if(foundPerson === null|| foundPerson.length === 0){
     alert("Sorry that person is not in the database.")
     return app(people);
   }else{
-    return foundPerson;
+    return foundPerson[0];
   }
  
 }
