@@ -191,6 +191,8 @@ function getChildren(people, person, personName){
                 }
            }return childrenArray;
           }
+          
+
             function displayFamily(spouse,childrenArray, parentsArray, siblingsArray, personName,person){
               //print persons info
               personName +=` Family info: \nCurrent Spouse: `;
@@ -228,6 +230,9 @@ function getChildren(people, person, personName){
                 }
                 alert(personName);
               }
+            
+                
+  
               function getDescendants(person, people, descendantsArray = []){  
                 let descendants = people.filter(function(el){    
                     if(el.parents.length !== 0){
@@ -235,6 +240,7 @@ function getChildren(people, person, personName){
                      } else{
                         return false;
                       }           
+              
                 });descendants.filter(function(el){
                   for(let i = 0; i < el.parents.length; i++){
                     if(el.parents[i] === person.id){
@@ -246,9 +252,11 @@ function getChildren(people, person, personName){
                     if(descendantsArray === 0){
                       alert(`${personName} has no descendants`)
                     }else{
+              
                     }
                 return descendantsArray;
                   }
+                     
               function searchByName(people){
                 let firstName = promptFor("What is the person's first name?", chars).toLowerCase();
                 let lastName = promptFor("What is the person's last name?", chars).toLowerCase();
@@ -386,6 +394,8 @@ function getAge(people){
   }
   return foundPeople;
 }
+ 
+
 function actualAge(dob){
 let birth = new Date(dob);
 let check = new Date();
