@@ -188,7 +188,7 @@ return searchForDescendants(counter-1, person, people);
 
 function getDescendants(person, people){  
   let descendants = people.filter(function(el){    
-      if(el.id){
+      if(el.parents.includes(person.id)){
         return true;
        } else{
           return false;
