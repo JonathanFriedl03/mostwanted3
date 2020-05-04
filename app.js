@@ -79,7 +79,7 @@ function chooseTheTraitToSearch(people){
 function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
-  let personName = `${person[0].firstName} ${person[0].lastName}`;
+  let personName = `${person.firstName} ${person.lastName}`;
 
   if(!person){
     alert("Could not find that individual.");
@@ -120,7 +120,7 @@ function searchForFamily(people,person,personName){
 }
 function getSpouse(people, person,personName){    
   for (var i = 0; i < people.length; i++){
-    if(people[i].id === person[0].currentSpouse){
+    if(people[i].id === person.currentSpouse){
       alert(`${personName} is married to ${people[i].firstName} ${people[i].lastName}.`);
     return people[i];      
     }     
@@ -131,7 +131,7 @@ function getSpouse(people, person,personName){
 function getParents(people, person,personName){ 
   let parentsArray = [];
    parentsArray =  people.filter(function(el){
-     if(person[0].parents[0] ===el.id || person[0].parents[1] === el.id){
+     if(person.parents[0] ===el.id || person.parents[1] === el.id){
        parentsArray.push(el);
        return true;
      }else{
@@ -152,9 +152,9 @@ function getParents(people, person,personName){
     let siblingsArray = []; 
     siblingsArray = people.filter(function(el){
       for (var i = 0; i < people.length; i++)
-      if(el.parents.length == 0 || person[0].id === el.id){
+      if(el.parents.length == 0 || person.id === el.id){
         return false
-      }else if(el.parents[0] == person[0].parents[0] || el.parents[1] == person[0].parents[1] ){
+      }else if(el.parents[0] == person.parents[0] || el.parents[1] == person.parents[1] ){
         siblingsArray.push(el);
         return true;
       }           
@@ -284,13 +284,13 @@ function getChildren(people, person, personName){
                   else{
                     return false;
                   }
-                })
+                });
                 // TODO: find the person using the name they entered
                 if(foundPerson === null|| foundPerson.length === 0){
                   alert("Sorry that person is not in the database.")
                   return app(people);
                 }else{
-                  return foundPerson;
+                  return foundPerson[0];
                 }
                }
               
@@ -473,15 +473,6 @@ function searchForByMultipleTraits(people){
                             break;
   }
 }
-
-// function searchByName(people){
-//   let firstName = promptFor("Please enter a 'First Name' of a person that you would like to search for?", chars);
-
-//   let foundPerson = people.filter(function(person){
-//     if(person.firstName === firstName)
-//   }
-//   )
-// }
 
 // alerts a list of people
 function displayPeople(people){
